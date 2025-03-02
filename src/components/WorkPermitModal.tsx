@@ -180,7 +180,11 @@ export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
         description: 'Work Permit Application Fee',
         callback_url: 'https://visa-api.netlify.app/api/ipn',
         notification_id: '',
-        branch: 'Visa Expert',
+        branch: 'Global Visa Expert',
+        mobile_payment_options: {
+          allow_international: true,
+          format: 'INTERNATIONAL'
+        },
         billing_address: {
           phone_number: '',
           email_address: 'customer@example.com',
