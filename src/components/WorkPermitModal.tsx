@@ -11,6 +11,11 @@ interface ExchangeRates {
 }
 
 const currencies = [
+  // Most Used
+  { code: 'USD', name: 'US Dollar' },
+  { code: 'EUR', name: 'Euro' },
+  { code: 'GBP', name: 'British Pound' },
+  
   // Africa
   { code: 'KES', name: 'Kenyan Shilling' },
   { code: 'NGN', name: 'Nigerian Naira' },
@@ -19,116 +24,43 @@ const currencies = [
   { code: 'TZS', name: 'Tanzanian Shilling' },
   { code: 'GHS', name: 'Ghanaian Cedi' },
   { code: 'EGP', name: 'Egyptian Pound' },
-  { code: 'MAD', name: 'Moroccan Dirham' },
-  { code: 'ETB', name: 'Ethiopian Birr' },
-  { code: 'RWF', name: 'Rwandan Franc' },
-  { code: 'KES', name: 'Kenyan Shilling' },
-  { code: 'NGN', name: 'Nigerian Naira' },
-  { code: 'ZAR', name: 'South African Rand' },
-  { code: 'UGX', name: 'Ugandan Shilling' },
-  { code: 'TZS', name: 'Tanzanian Shilling' },
-  { code: 'GHS', name: 'Ghanaian Cedi' },
-  { code: 'EGP', name: 'Egyptian Pound' },
-  { code: 'MAD', name: 'Moroccan Dirham' },
-  { code: 'ETB', name: 'Ethiopian Birr' },
-  { code: 'RWF', name: 'Rwandan Franc' },
-  { code: 'TND', name: 'Tunisian Dinar' },
-  { code: 'LYD', name: 'Libyan Dinar' },
-  { code: 'BWP', name: 'Botswana Pula' },
-  { code: 'SCR', name: 'Seychellois Rupee' },
-  { code: 'ERN', name: 'Eritrean Nakfa' },
-  { code: 'ZMW', name: 'Zambian Kwacha' },
-  { code: 'MWK', name: 'Malawian Kwacha' },
-  { code: 'MUR', name: 'Mauritian Rupee' },
-  { code: 'MZN', name: 'Mozambican Metical' },
-  { code: 'NAD', name: 'Namibian Dollar' },
-  { code: 'LSL', name: 'Lesotho Loti' },
-  { code: 'SZL', name: 'Swazi Lilangeni' },
-  { code: 'XOF', name: 'West African CFA Franc' },
-  { code: 'XAF', name: 'Central African CFA Franc' },
-  { code: 'DZD', name: 'Algerian Dinar' },
-  { code: 'AOA', name: 'Angolan Kwanza' },
-  { code: 'BIF', name: 'Burundian Franc' },
-  { code: 'CVE', name: 'Cape Verdean Escudo' },
-  { code: 'CDF', name: 'Congolese Franc' },
-  { code: 'DJF', name: 'Djiboutian Franc' },
-  { code: 'GMD', name: 'Gambian Dalasi' },
-  { code: 'GNF', name: 'Guinean Franc' },
-  { code: 'KMF', name: 'Comorian Franc' },
-  { code: 'LRD', name: 'Liberian Dollar' },
-  { code: 'MGA', name: 'Malagasy Ariary' },
-  { code: 'MRU', name: 'Mauritanian Ouguiya' },
-  { code: 'SLL', name: 'Sierra Leonean Leone' },
-  { code: 'SOS', name: 'Somali Shilling' },
-  { code: 'SSP', name: 'South Sudanese Pound' },
-  { code: 'SDG', name: 'Sudanese Pound' },
-  { code: 'STN', name: 'São Tomé and Príncipe Dobra' },
-
+  
   // Americas
-  { code: 'USD', name: 'US Dollar' },
   { code: 'CAD', name: 'Canadian Dollar' },
-  { code: 'MXN', name: 'Mexican Peso' },
-  { code: 'BRL', name: 'Brazilian Real' },
-  { code: 'ARS', name: 'Argentine Peso' },
-  { code: 'COP', name: 'Colombian Peso' },
-  { code: 'CLP', name: 'Chilean Peso' },
-  { code: 'PEN', name: 'Peruvian Sol' },
-
+  
   // Europe
-  { code: 'EUR', name: 'Euro' },
-  { code: 'GBP', name: 'British Pound' },
   { code: 'CHF', name: 'Swiss Franc' },
-  { code: 'SEK', name: 'Swedish Krona' },
-  { code: 'NOK', name: 'Norwegian Krone' },
-  { code: 'DKK', name: 'Danish Krone' },
-  { code: 'PLN', name: 'Polish Złoty' },
-  { code: 'CZK', name: 'Czech Koruna' },
-
+  
   // Asia
   { code: 'JPY', name: 'Japanese Yen' },
   { code: 'CNY', name: 'Chinese Yuan' },
   { code: 'INR', name: 'Indian Rupee' },
-  { code: 'KRW', name: 'South Korean Won' },
   { code: 'SGD', name: 'Singapore Dollar' },
-  { code: 'HKD', name: 'Hong Kong Dollar' },
-  { code: 'IDR', name: 'Indonesian Rupiah' },
-  { code: 'MYR', name: 'Malaysian Ringgit' },
-  { code: 'THB', name: 'Thai Baht' },
-  { code: 'VND', name: 'Vietnamese Dong' },
-  { code: 'PHP', name: 'Philippine Peso' },
-  { code: 'PKR', name: 'Pakistani Rupee' },
-  { code: 'BDT', name: 'Bangladeshi Taka' },
-
+  
   // Middle East
   { code: 'AED', name: 'UAE Dirham' },
   { code: 'SAR', name: 'Saudi Riyal' },
-  { code: 'QAR', name: 'Qatari Riyal' },
-  { code: 'KWD', name: 'Kuwaiti Dinar' },
-  { code: 'BHD', name: 'Bahraini Dinar' },
-  { code: 'OMR', name: 'Omani Rial' },
-
+  
   // Oceania
   { code: 'AUD', name: 'Australian Dollar' },
-  { code: 'NZD', name: 'New Zealand Dollar' },
-  { code: 'FJD', name: 'Fijian Dollar' },
-  { code: 'PGK', name: 'Papua New Guinean Kina' }
+  { code: 'NZD', name: 'New Zealand Dollar' }
 ];
 
-// Get the API URL from environment or default to the new API URL
+// Get the API URL from environment or default to the new API URL (removed trailing slash)
 const API_URL = import.meta.env.VITE_API_URL || 'https://visa-api.netlify.app';
 
 export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectedCurrency, setSelectedCurrency] = useState('KES');
+  const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [exchangeRates, setExchangeRates] = useState<ExchangeRates>({});
-  const baseAmount = 950; // Base amount in KES
+  const baseAmount = 950; // Base amount in USD
 
   useEffect(() => {
     const fetchExchangeRates = async () => {
       try {
         const response = await axios.get(
-          `https://api.exchangerate-api.com/v4/latest/KES`
+          `https://api.exchangerate-api.com/v4/latest/USD`
         );
         setExchangeRates(response.data.rates);
       } catch (err) {
@@ -141,7 +73,7 @@ export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
 
   const convertAmount = (amount: number, targetCurrency: string): string => {
     if (!exchangeRates || !exchangeRates[targetCurrency]) {
-      return `${amount} KES`;
+      return `${amount} USD`;
     }
 
     const rate = exchangeRates[targetCurrency];
