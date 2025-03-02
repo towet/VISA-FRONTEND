@@ -53,7 +53,6 @@ export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
-  const [exchangeRates, setExchangeRates] = useState<ExchangeRates>({});
   const baseAmount = 950; // Base amount in USD
 
   useEffect(() => {
@@ -62,7 +61,7 @@ export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
         const response = await axios.get(
           `https://api.exchangerate-api.com/v4/latest/USD`
         );
-        setExchangeRates(response.data.rates);
+        // setExchangeRates(response.data.rates);
       } catch (err) {
         console.error('Error fetching exchange rates:', err);
       }
@@ -72,13 +71,7 @@ export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
   }, []);
 
   const convertAmount = (amount: number, targetCurrency: string): string => {
-    if (!exchangeRates || !exchangeRates[targetCurrency]) {
-      return `${amount} USD`;
-    }
-
-    const rate = exchangeRates[targetCurrency];
-    const convertedAmount = (amount * rate).toFixed(2);
-    return `${convertedAmount} ${targetCurrency}`;
+    return `${amount} USD`;
   };
 
   const handlePayment = async () => {
@@ -100,8 +93,8 @@ export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
       // Submit order
       const orderData = {
         id: `visa_expert_${Date.now()}`,
-        currency: selectedCurrency,
-        amount: parseFloat(convertAmount(baseAmount, selectedCurrency).split(' ')[0]),
+        currency: 'USD', // Always use USD
+        amount: baseAmount,
         description: 'Work Permit Application Fee',
         callback_url: 'https://visa-api.netlify.app/api/ipn',
         notification_id: '',
@@ -172,11 +165,9 @@ export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
               onChange={(e) => setSelectedCurrency(e.target.value)}
               className="w-full sm:w-auto p-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white hover:bg-gray-50 transition-colors duration-200"
             >
-              {currencies.map((currency) => (
-                <option key={currency.code} value={currency.code}>
-                  {currency.code} - {currency.name}
-                </option>
-              ))}
+              <option key="USD" value="USD">
+                USD - US Dollar
+              </option>
             </select>
           </div>
 
@@ -185,7 +176,7 @@ export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Processing Fee</h3>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <p className="text-2xl font-bold text-blue-600">
-                {convertAmount(baseAmount, selectedCurrency)}
+                ${baseAmount} USD
               </p>
               <span className="text-sm text-gray-500">Fully refundable</span>
             </div>
