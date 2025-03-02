@@ -114,7 +114,7 @@ export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
   const [error, setError] = useState<string | null>(null);
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [exchangeRates, setExchangeRates] = useState<ExchangeRates>({});
-  const baseAmount = 7; // Base amount in USD
+  const baseAmount = 8; // Base amount in USD
 
   useEffect(() => {
     const fetchExchangeRates = async () => {
