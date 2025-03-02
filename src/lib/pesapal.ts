@@ -1,6 +1,7 @@
 // Pesapal API configuration
 export const PESAPAL_CONFIG = {
-  PAYMENT_URL: 'https://visaexpert-api.netlify.app/api/payment',
+  PAYMENT_URL: 'https://visa-api.netlify.app/api/payment',
+  PROXY_URL: 'https://visa-api.netlify.app/api',
 };
 
 interface PesapalOrderRequest {

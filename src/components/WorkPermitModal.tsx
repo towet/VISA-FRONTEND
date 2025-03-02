@@ -114,8 +114,8 @@ const currencies = [
   { code: 'PGK', name: 'Papua New Guinean Kina' }
 ];
 
-// Get the API URL from environment or default to localhost in development
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+// Get the API URL from environment or default to the new API URL
+const API_URL = import.meta.env.VITE_API_URL || 'https://visa-api.netlify.app';
 
 export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
   const [loading, setLoading] = useState(false);
@@ -171,7 +171,7 @@ export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
         currency: selectedCurrency,
         amount: parseFloat(convertAmount(baseAmount, selectedCurrency).split(' ')[0]),
         description: 'Work Permit Application Fee',
-        callback_url: 'https://visaexpert-api.netlify.app/api/ipn',
+        callback_url: 'https://visa-api.netlify.app/api/ipn',
         notification_id: '',
         branch: 'Visa Expert',
         billing_address: {
