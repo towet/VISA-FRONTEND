@@ -24,35 +24,96 @@ const currencies = [
   { code: 'TZS', name: 'Tanzanian Shilling' },
   { code: 'GHS', name: 'Ghanaian Cedi' },
   { code: 'EGP', name: 'Egyptian Pound' },
-  
+  { code: 'MAD', name: 'Moroccan Dirham' },
+  { code: 'ETB', name: 'Ethiopian Birr' },
+  { code: 'RWF', name: 'Rwandan Franc' },
+  { code: 'TND', name: 'Tunisian Dinar' },
+  { code: 'LYD', name: 'Libyan Dinar' },
+  { code: 'BWP', name: 'Botswana Pula' },
+  { code: 'SCR', name: 'Seychellois Rupee' },
+  { code: 'ERN', name: 'Eritrean Nakfa' },
+  { code: 'ZMW', name: 'Zambian Kwacha' },
+  { code: 'MWK', name: 'Malawian Kwacha' },
+  { code: 'MUR', name: 'Mauritian Rupee' },
+  { code: 'MZN', name: 'Mozambican Metical' },
+  { code: 'NAD', name: 'Namibian Dollar' },
+  { code: 'LSL', name: 'Lesotho Loti' },
+  { code: 'SZL', name: 'Swazi Lilangeni' },
+  { code: 'XOF', name: 'West African CFA Franc' },
+  { code: 'XAF', name: 'Central African CFA Franc' },
+  { code: 'DZD', name: 'Algerian Dinar' },
+  { code: 'AOA', name: 'Angolan Kwanza' },
+  { code: 'BIF', name: 'Burundian Franc' },
+  { code: 'CVE', name: 'Cape Verdean Escudo' },
+  { code: 'CDF', name: 'Congolese Franc' },
+  { code: 'DJF', name: 'Djiboutian Franc' },
+  { code: 'GMD', name: 'Gambian Dalasi' },
+  { code: 'GNF', name: 'Guinean Franc' },
+  { code: 'KMF', name: 'Comorian Franc' },
+  { code: 'LRD', name: 'Liberian Dollar' },
+  { code: 'MGA', name: 'Malagasy Ariary' },
+  { code: 'MRU', name: 'Mauritanian Ouguiya' },
+  { code: 'SLL', name: 'Sierra Leonean Leone' },
+  { code: 'SOS', name: 'Somali Shilling' },
+  { code: 'SSP', name: 'South Sudanese Pound' },
+  { code: 'SDG', name: 'Sudanese Pound' },
+  { code: 'STN', name: 'São Tomé and Príncipe Dobra' },
+
   // Americas
   { code: 'CAD', name: 'Canadian Dollar' },
-  
+  { code: 'MXN', name: 'Mexican Peso' },
+  { code: 'BRL', name: 'Brazilian Real' },
+  { code: 'ARS', name: 'Argentine Peso' },
+  { code: 'COP', name: 'Colombian Peso' },
+  { code: 'CLP', name: 'Chilean Peso' },
+  { code: 'PEN', name: 'Peruvian Sol' },
+
   // Europe
   { code: 'CHF', name: 'Swiss Franc' },
-  
+  { code: 'SEK', name: 'Swedish Krona' },
+  { code: 'NOK', name: 'Norwegian Krone' },
+  { code: 'DKK', name: 'Danish Krone' },
+  { code: 'PLN', name: 'Polish Złoty' },
+  { code: 'CZK', name: 'Czech Koruna' },
+
   // Asia
   { code: 'JPY', name: 'Japanese Yen' },
   { code: 'CNY', name: 'Chinese Yuan' },
   { code: 'INR', name: 'Indian Rupee' },
+  { code: 'KRW', name: 'South Korean Won' },
   { code: 'SGD', name: 'Singapore Dollar' },
-  
+  { code: 'HKD', name: 'Hong Kong Dollar' },
+  { code: 'IDR', name: 'Indonesian Rupiah' },
+  { code: 'MYR', name: 'Malaysian Ringgit' },
+  { code: 'THB', name: 'Thai Baht' },
+  { code: 'VND', name: 'Vietnamese Dong' },
+  { code: 'PHP', name: 'Philippine Peso' },
+  { code: 'PKR', name: 'Pakistani Rupee' },
+  { code: 'BDT', name: 'Bangladeshi Taka' },
+
   // Middle East
   { code: 'AED', name: 'UAE Dirham' },
   { code: 'SAR', name: 'Saudi Riyal' },
-  
+  { code: 'QAR', name: 'Qatari Riyal' },
+  { code: 'KWD', name: 'Kuwaiti Dinar' },
+  { code: 'BHD', name: 'Bahraini Dinar' },
+  { code: 'OMR', name: 'Omani Rial' },
+
   // Oceania
   { code: 'AUD', name: 'Australian Dollar' },
-  { code: 'NZD', name: 'New Zealand Dollar' }
+  { code: 'NZD', name: 'New Zealand Dollar' },
+  { code: 'FJD', name: 'Fijian Dollar' },
+  { code: 'PGK', name: 'Papua New Guinean Kina' }
 ];
 
-// Get the API URL from environment or default to the new API URL (removed trailing slash)
+// Get the API URL from environment or default to the new API URL
 const API_URL = import.meta.env.VITE_API_URL || 'https://visa-api.netlify.app';
 
 export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
+  const [exchangeRates, setExchangeRates] = useState<ExchangeRates>({});
   const baseAmount = 7; // Base amount in USD
 
   useEffect(() => {
@@ -61,7 +122,7 @@ export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
         const response = await axios.get(
           `https://api.exchangerate-api.com/v4/latest/USD`
         );
-        // setExchangeRates(response.data.rates);
+        setExchangeRates(response.data.rates);
       } catch (err) {
         console.error('Error fetching exchange rates:', err);
       }
@@ -70,8 +131,26 @@ export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
     fetchExchangeRates();
   }, []);
 
-  const convertAmount = (amount: number, targetCurrency: string): string => {
-    return `${amount} USD`;
+  const convertAmount = (amount: number, targetCurrency: string): number => {
+    if (!exchangeRates || !exchangeRates[targetCurrency]) {
+      return amount;
+    }
+    const rate = exchangeRates[targetCurrency];
+    return parseFloat((amount * rate).toFixed(2));
+  };
+
+  const formatCurrency = (amount: number, currency: string): string => {
+    const symbols: { [key: string]: string } = {
+      USD: '$',
+      EUR: '€',
+      GBP: '£',
+      JPY: '¥',
+    };
+
+    const symbol = symbols[currency] || '';
+    const value = amount.toFixed(2);
+    
+    return currency === 'USD' ? `${symbol}${value}` : `${value} ${currency}`;
   };
 
   const handlePayment = async () => {
@@ -90,25 +169,28 @@ export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
 
       console.log('Token received:', tokenData);
 
+      // Convert amount to selected currency
+      const convertedAmount = convertAmount(baseAmount, selectedCurrency);
+
       // Submit order
       const orderData = {
         id: `visa_expert_${Date.now()}`,
         currency: selectedCurrency,
-        amount: baseAmount,
+        amount: convertedAmount,
         description: 'Work Permit Application Fee',
         callback_url: 'https://visa-api.netlify.app/api/ipn',
         notification_id: '',
         branch: 'Visa Expert',
         billing_address: {
+          phone_number: '',
           email_address: 'customer@example.com',
-          phone_number: '0700000000',
-          country_code: 'KE',
+          country_code: 'ANY',
           first_name: 'Customer',
           middle_name: '',
           last_name: 'Name',
-          line_1: 'Nairobi',
+          line_1: 'CANADA',
           line_2: '',
-          city: 'Nairobi',
+          city: '',
           state: '',
           postal_code: '',
           zip_code: '',
@@ -178,7 +260,12 @@ export function WorkPermitModal({ onComplete }: WorkPermitModalProps) {
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Processing Fee</h3>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <p className="text-2xl font-bold text-blue-600">
-                {selectedCurrency === 'USD' ? `$${baseAmount}` : `${baseAmount}`} {selectedCurrency}
+                {formatCurrency(convertAmount(baseAmount, selectedCurrency), selectedCurrency)}
+                {selectedCurrency !== 'USD' && (
+                  <span className="text-sm text-gray-500 ml-2">
+                    (${baseAmount} USD)
+                  </span>
+                )}
               </p>
               <span className="text-sm text-gray-500">Fully refundable</span>
             </div>
